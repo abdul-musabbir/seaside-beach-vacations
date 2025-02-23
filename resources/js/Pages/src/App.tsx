@@ -1,10 +1,9 @@
+import { Head } from "@inertiajs/react";
+import React, { Suspense } from "react";
 import Venmo from "./assets/venmo.svg";
 import Zelle from "./assets/zelle.png";
-
-import React, { Suspense, useEffect } from "react";
 import ContactForm from "./components/ContactForm";
 import Preloader from "./components/Preloader";
-
 // Lazy-load components
 const HeroSection = React.lazy(() => import("./components/HeroSection"));
 const OurFeaturedTours = React.lazy(
@@ -23,18 +22,15 @@ const TesnimonialsSection = React.lazy(
 const Footer = React.lazy(() => import("./components/Footer"));
 const Headers = React.lazy(() => import("./components/Headers"));
 
-function App() {
-    useEffect(() => {
-        document.title = "Seaside Beach Vacations";
-    }, []);
-
+function App({ listing_data }: { listing_data: any }) {
     return (
         <div className="min-h-screen">
+            <Head title="Home" />
             <Suspense fallback={<Preloader />}>
-                <Headers />
+                <Headers datas={listing_data} />
                 <HeroSection />
                 <div id="featured-tours">
-                    <OurFeaturedTours />
+                    <OurFeaturedTours ourFeaturedData={listing_data} />
                 </div>
 
                 <div id="features-and-amenities">
@@ -44,15 +40,19 @@ function App() {
                 <div id="how-to-book">
                     <BookingGuideline />
                 </div>
+
                 <HowToBook Venmo={Venmo} Zelle={Zelle} />
+
                 <TesnimonialsSection />
+
                 <div id="contact-us">
                     <ContactForm />
                 </div>
+
                 <Footer />
             </Suspense>
         </div>
     );
 }
 
-export default React.memo(App); // Wrap App with React.memo for optimization
+export default React.memo(App);
