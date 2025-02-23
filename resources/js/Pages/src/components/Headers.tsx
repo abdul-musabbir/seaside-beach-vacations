@@ -16,7 +16,7 @@ export default function Headers({ datas }: { datas: any }) {
     const pathname = location.pathname.split("/");
     const [data, setData] = useState<DataItem[]>([]);
     const [scrolly, setScrolly] = useState<number>(0);
-
+    const [isMobile, setIsMobile] = useState(false);
     // Fetch data when datas is available
     useEffect(() => {
         if (datas) {
@@ -28,6 +28,24 @@ export default function Headers({ datas }: { datas: any }) {
             );
         }
     }, [datas]); // Re-run when datas updates
+
+    // Check the window width on mount and resize
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        // Call on mount to check the initial screen size
+        handleResize();
+
+        // Add event listener to handle resizing
+        window.addEventListener("resize", handleResize);
+
+        // Cleanup the event listener when component is unmounted
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -103,7 +121,7 @@ export default function Headers({ datas }: { datas: any }) {
                             <button
                                 onClick={() => setShowDropDown(!showDropDown)}
                                 className={cn(
-                                    "flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto py-4",
+                                    "flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto py-4 md:hidden",
                                     {
                                         "text-black md:text-white":
                                             scrollY <= 0,
@@ -126,12 +144,40 @@ export default function Headers({ datas }: { datas: any }) {
                                     )}
                                 />
                             </button>
+
+                            <button
+                                className={cn(
+                                    "items-center hidden md:flex justify-between w-full py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto py-4",
+                                    {
+                                        "text-black md:text-white":
+                                            scrollY <= 0,
+                                        "text-black": scrollY > 0,
+                                    },
+                                    {
+                                        " md:text-black":
+                                            pathname.includes("checkout"),
+                                    }
+                                )}
+                            >
+                                Houses
+                                <ChevronDown
+                                    className={cn(
+                                        "transition-all duration-150 md:group-hover:rotate-180",
+                                        {
+                                            "rotate-180": showDropDown,
+                                            "rotate-0":
+                                                !showDropDown || !isMobile,
+                                        }
+                                    )}
+                                />
+                            </button>
                             {/* <!-- Dropdown menu --> */}
                             <div
                                 className={cn(
                                     "z-10 hidden md:group-hover:block md:group-hover:absolute left-0 top-6 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-md w-44 ",
                                     {
-                                        "block w-full": showDropDown,
+                                        "block w-full":
+                                            showDropDown && isMobile, // Apply only on mobile and if showDropDown is true
                                     },
                                     {
                                         " md:text-black":
