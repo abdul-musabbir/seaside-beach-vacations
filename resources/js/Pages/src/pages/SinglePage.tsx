@@ -125,7 +125,7 @@ function SinglePage({
 
             {/* Footer */}
             <Suspense fallback={<div>Loading footer...</div>}>
-                <Footer />
+                <Footer data={all_titles} />
             </Suspense>
         </div>
     );

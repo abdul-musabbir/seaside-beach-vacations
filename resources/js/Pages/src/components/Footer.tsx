@@ -2,7 +2,13 @@ import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 import { Link } from "@inertiajs/react";
 import SeasideLogo from "../assets/seasidebeachvacationslogo.png";
-const Footer = () => {
+
+interface DataPropsType {
+    title: string;
+    slug: string;
+}
+
+const Footer = ({ data }: { data: DataPropsType[] }) => {
     // const scrollToTop = () => {
     //   window.scrollTo({ top: 0, behavior: "smooth" });
     // };
@@ -44,17 +50,23 @@ const Footer = () => {
                         <h3 className="font-semibold mb-4">Links</h3>
                         <ul className="space-y-2 text-sm text-gray-400">
                             <li>
-                                <Link href="#" className="hover:text-amber-500">
+                                <Link href="/" className="hover:text-amber-500">
                                     Home
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#" className="hover:text-amber-500">
+                                <Link
+                                    href="#how-to-book"
+                                    className="hover:text-amber-500"
+                                >
                                     How to Book
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#" className="hover:text-amber-500">
+                                <Link
+                                    href="#features"
+                                    className="hover:text-amber-500"
+                                >
                                     Features
                                 </Link>
                             </li>
@@ -64,31 +76,19 @@ const Footer = () => {
                     <div className=" lg:pl-16">
                         <h3 className="font-semibold mb-4">Home</h3>
                         <ul className="space-y-2 text-sm text-gray-400">
-                            <li>
-                                <a href="#" className="hover:text-amber-500">
-                                    Unit 1
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-amber-500">
-                                    Unit 2
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-amber-500">
-                                    Unit 3
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-amber-500">
-                                    Ocean Oasis
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-amber-500">
-                                    Beach Escape
-                                </a>
-                            </li>
+                            {data &&
+                                data.map(
+                                    (link: DataPropsType, index: number) => (
+                                        <li key={index}>
+                                            <Link
+                                                href={"/" + link?.slug}
+                                                className="hover:text-amber-500"
+                                            >
+                                                {link?.title}
+                                            </Link>
+                                        </li>
+                                    )
+                                )}
                         </ul>
                     </div>
 

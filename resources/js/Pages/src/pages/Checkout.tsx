@@ -493,7 +493,7 @@ function Checkout(props: any) {
                 </div>
             </main>
 
-            <Footer />
+            <Footer data={all_titles} />
         </div>
     );
 }

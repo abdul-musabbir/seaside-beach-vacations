@@ -1,5 +1,5 @@
 import { Head } from "@inertiajs/react";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Venmo from "./assets/venmo.svg";
 import Zelle from "./assets/zelle.png";
 import ContactForm from "./components/ContactForm";
@@ -21,8 +21,23 @@ const TesnimonialsSection = React.lazy(
 );
 const Footer = React.lazy(() => import("./components/Footer"));
 const Headers = React.lazy(() => import("./components/Headers"));
-
+interface DataItem {
+    title: string;
+    slug: string;
+}
 function App({ listing_data }: { listing_data: any }) {
+    const [data, setData] = useState<DataItem[]>([]);
+    // Fetch data when datas is available
+    useEffect(() => {
+        if (listing_data) {
+            setData(
+                listing_data.map((item: { title: string; slug: string }) => ({
+                    title: item.title,
+                    slug: item.slug,
+                }))
+            );
+        }
+    }, [listing_data]); // Re-run when datas updates
     return (
         <div className="min-h-screen">
             <Head title="Home" />
@@ -33,7 +48,7 @@ function App({ listing_data }: { listing_data: any }) {
                     <OurFeaturedTours ourFeaturedData={listing_data} />
                 </div>
 
-                <div id="features-and-amenities">
+                <div id="features">
                     <FacilitiesSection />
                 </div>
 
@@ -49,7 +64,7 @@ function App({ listing_data }: { listing_data: any }) {
                     <ContactForm />
                 </div>
 
-                <Footer />
+                <Footer data={data} />
             </Suspense>
         </div>
     );
