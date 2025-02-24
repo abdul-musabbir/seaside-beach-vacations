@@ -16,12 +16,16 @@ export default function BookingForm({ data }: { data: any }) {
     const [showCheckOutCalendar, setShowCheckOutCalendar] = useState(false);
     const [checkIn, setCheckIn] = useState<Date | null>(null);
     const [checkOut, setCheckOut] = useState<Date | null>(null);
-    const [adults, setAdults] = useState(2);
+    const [adults, setAdults] = useState(0);
     const [children, setChildren] = useState(0);
     const [pricing, setPricing] = useState<PricingDetails | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const checkInCalendarRef = useRef<HTMLDivElement>(null);
     const checkOutCalendarRef = useRef<HTMLDivElement>(null);
+    const [selectGuestErrorMessage, setSelectGuestErrorMessage] =
+        useState<string>("");
+    const [selectDateErrorMessage, setSelectDateErrorMessage] =
+        useState<string>("");
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -98,21 +102,70 @@ export default function BookingForm({ data }: { data: any }) {
     //   return 700;
     // };
 
+    // const handleSubmit = (e: any): void => {
+    //     e.preventDefault();
+    //     if (pricing && adults > 0) {
+    //         const subtotalprice = pricing.subtotal;
+    //         router.visit(`/${data.slug}/checkout`, {
+    //             method: "post", // Use 'post' method instead of 'get'
+    //             data: {
+    //                 data, // pass your data
+    //                 checkIn,
+    //                 checkOut,
+    //                 adults,
+    //                 subtotalprice,
+    //             },
+    //         });
+    //     }
+    // };
+
+    // checkin
+    useEffect(() => {
+        // Only clear the error if `checkIn` has changed and is a valid value
+        if (checkIn) {
+            setSelectDateErrorMessage((prev) => (checkIn ? "" : prev));
+        }
+    }, [checkIn]);
+
+    useEffect(() => {
+        // Only clear the error if `adults` is greater than 0
+        if (adults > 0) {
+            setSelectGuestErrorMessage((prev) => (adults > 0 ? "" : prev));
+        }
+    }, [adults]);
+
     const handleSubmit = (e: any): void => {
         e.preventDefault();
-        if (pricing) {
-            const subtotalprice = pricing.subtotal;
-            router.visit(`/${data.slug}/checkout`, {
-                method: "post", // Use 'post' method instead of 'get'
-                data: {
-                    data, // pass your data
-                    checkIn,
-                    checkOut,
-                    adults,
-                    subtotalprice,
-                },
-            });
+
+        // Ensure pricing and adults are valid before proceeding
+        if (!pricing) {
+            setSelectDateErrorMessage("select date");
+            return; // Prevent form submission if pricing is missing
         }
+
+        if (adults <= 0) {
+            setSelectDateErrorMessage("");
+            setSelectGuestErrorMessage("select guest");
+            return; // Prevent form submission if adults <= 0
+        }
+
+        const subtotalprice = pricing.subtotal;
+
+        if (!data?.slug) {
+            return; // Prevent submission if data.slug is missing
+        }
+
+        // Proceed with the visit (POST request)
+        router.visit(`/${data.slug}/checkout`, {
+            method: "post", // Use 'post' method instead of 'get'
+            data: {
+                data,
+                checkIn,
+                checkOut,
+                adults,
+                subtotalprice,
+            },
+        });
     };
 
     function GenerateGuest(sleeps: number) {
@@ -270,6 +323,16 @@ export default function BookingForm({ data }: { data: any }) {
                         </div>
                     )}
                 </div>
+
+                {/* Error Message */}
+                {selectDateErrorMessage && (
+                    <div className="bg-red-50 border border-red-200 rounded-md p-2">
+                        <div className="flex items-center gap-2 text-red-700">
+                            <Info className="w-4 h-4" />
+                            <p>{selectDateErrorMessage}</p>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Error Message */}
@@ -297,7 +360,11 @@ export default function BookingForm({ data }: { data: any }) {
                                     setAdults(Number(e.target.value))
                                 }
                                 className="pl-10 w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                                required
                             >
+                                <option value={0} disabled>
+                                    Select Guest
+                                </option>
                                 {GenerateGuest(
                                     Number(data.meta.num_sleeps)
                                 ).map((num) => (
@@ -307,6 +374,16 @@ export default function BookingForm({ data }: { data: any }) {
                                 ))}
                             </select>
                         </div>
+
+                        {/* Error Message */}
+                        {selectGuestErrorMessage && (
+                            <div className="bg-red-50 border border-red-200 rounded-md p-2 mt-1.5">
+                                <div className="flex items-center gap-2 text-red-700">
+                                    <Info className="w-4 h-4" />
+                                    <p>{selectGuestErrorMessage}</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

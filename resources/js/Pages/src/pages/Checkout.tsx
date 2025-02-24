@@ -133,9 +133,6 @@ function Checkout(props: any) {
                     console.error("Error:", err); // Debugging
                 },
                 onFinish: (res: any) => {
-                    console.log("data post successfully");
-                    console.log("Success response:", res); // Log the response to ensure it's coming in correctly
-
                     if (res && res.data.data) {
                         const referenceCode = res.data.data.referenceCode;
                         setRefernceCode(referenceCode);

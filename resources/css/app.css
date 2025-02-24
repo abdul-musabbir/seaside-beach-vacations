@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 /*  */
+
+body {
+    font-family: "Poppins", serif;
+}
+
 .home-page-reviews {
     width: 100%;
     /* height: 100%; */
