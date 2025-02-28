@@ -145,7 +145,7 @@ const Footer = ({ data }: { data: DataPropsType[] }) => {
                             </a>
                         </p>
 
-                        <div className="flex gap-4">
+                        <div className="flex gap-4 items-center">
                             <a
                                 href="https://www.instagram.com/seasidebeachvacations/"
                                 target="_blank"

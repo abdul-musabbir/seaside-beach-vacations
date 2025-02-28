@@ -232,3 +232,11 @@ html {
 .reviews-slider {
     height: 100% !important;
 }
+/*
+*/
+
+.jacuzziIcon{
+    width: 20px;
+    height: 20px;
+    fill: rgb(37,95,235);
+}

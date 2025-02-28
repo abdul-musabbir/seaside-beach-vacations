@@ -1,5 +1,5 @@
 import {
-    Car,
+    Car, Dog,
     Flame,
     Home,
     MapPin,
@@ -105,10 +105,10 @@ export default function FacilitiesSection() {
                         {
                             icon: (
                                 <div className="w-12 h-12 flex items-center justify-center bg-emerald-100 rounded-xl mb-3">
-                                    <MoreHorizontal className="w-6 h-6 text-emerald-500" />
+                                    <Dog className="w-6 h-6 text-emerald-500" />
                                 </div>
                             ),
-                            name: "Many More Features",
+                            name: "Pet friendly",
                         },
                     ].map((facility, index) => (
                         <div

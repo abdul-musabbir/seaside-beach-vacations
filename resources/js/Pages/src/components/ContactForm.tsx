@@ -43,8 +43,8 @@ function ContactForm() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <div className="w-[92%] xl:max-w-screen-xl mx-auto px-4 py-28 sm:px-6 lg:px-8">
+        <div className="min-h-screen">
+            <div className="sm:w-[92%] xl:max-w-screen-xl sm:mx-auto sm:px-6 lg:px-8">
                 <div className="bg-white shadow-xl rounded-2xl overflow-hidden">
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Side - Contact Information */}
@@ -79,8 +79,8 @@ function ContactForm() {
 
                                     <div className="pt-8">
                                         <div className="space-y-8">
-                                            <div className="flex items-center space-x-4 group">
-                                                <div className="bg-white/10 p-3 rounded-lg group-hover:bg-white/20 transition duration-300">
+                                            <div className="flex items-center sm:space-x-4 group">
+                                                <div className="hidden sm:block bg-white/10 p-3 rounded-lg group-hover:bg-white/20 transition duration-300">
                                                     <Phone className="w-6 h-6 text-blue-300" />
                                                 </div>
                                                 <div>
@@ -93,8 +93,8 @@ function ContactForm() {
                                                 </div>
                                             </div>
 
-                                            <div className="flex items-center space-x-4 group">
-                                                <div className="bg-white/10 p-3 rounded-lg group-hover:bg-white/20 transition duration-300">
+                                            <div className="flex items-center sm:space-x-4 group">
+                                                <div className="hidden sm:block bg-white/10 p-3 rounded-lg group-hover:bg-white/20 transition duration-300">
                                                     <Mail className="w-6 h-6 text-blue-300" />
                                                 </div>
                                                 <div>
@@ -107,8 +107,8 @@ function ContactForm() {
                                                 </div>
                                             </div>
 
-                                            <div className="flex items-start space-x-4 group">
-                                                <div className="bg-white/10 p-3 rounded-lg group-hover:bg-white/20 transition duration-300">
+                                            <div className="flex items-start sm:space-x-4 group">
+                                                <div className="hidden sm:block bg-white/10 p-3 rounded-lg group-hover:bg-white/20 transition duration-300">
                                                     <MapPin className="w-6 h-6 text-blue-300" />
                                                 </div>
                                                 <div>

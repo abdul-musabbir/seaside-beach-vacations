@@ -128,7 +128,7 @@ export default function OurFeaturedTours({
                                 </Link>
                                 <div className="flex items-center text-gray-600 mb-4">
                                     <MapPin className="w-4 h-4 mr-1" />
-                                    <span>
+                                    <span className={'text-sm sm:text-base md:text-sm lg:text-base'}>
                                         {item?.location || "Unknown Location"}
                                     </span>
                                 </div>
@@ -136,25 +136,25 @@ export default function OurFeaturedTours({
                                 <div className="grid grid-cols-2 gap-4 mb-6">
                                     <div className="flex items-center text-gray-600">
                                         <Users className="w-5 h-5 mr-2 text-gray-500" />
-                                        <span>
+                                        <span className={'text-sm sm:text-base md:text-sm lg:text-base'}>
                                             {item.meta.num_sleeps} Guests
                                         </span>
                                     </div>
                                     <div className="flex items-center text-gray-600">
                                         <Bed className="w-5 h-5 mr-2 text-gray-500" />
-                                        <span>
+                                        <span className={'text-sm sm:text-base md:text-sm lg:text-base'}>
                                             {item.meta.num_bedrooms} Bedrooms
                                         </span>
                                     </div>
                                     <div className="flex items-center text-gray-600">
                                         <Bath className="w-5 h-5 mr-2 text-gray-500" />
-                                        <span>
+                                        <span className={'text-sm sm:text-base md:text-sm lg:text-base'}>
                                             {item.meta.num_bathrooms} Bathrooms
                                         </span>
                                     </div>
                                     <div className="flex items-center text-gray-600">
                                         <Coffee className="w-5 h-5 mr-2 text-gray-500" />
-                                        <span>kitchen</span>
+                                        <span className={'text-sm sm:text-base md:text-sm lg:text-base'}>kitchen</span>
                                     </div>
                                 </div>
                                 <div className="flex justify-between items-center">
@@ -169,7 +169,7 @@ export default function OurFeaturedTours({
                                     </div>
                                     <Link
                                         href={"/" + item.slug || "#"} // Ensure the slug exists
-                                        className="bg-black text-white px-4 py-2 rounded-full cursor-pointer"
+                                        className="bg-black text-white py-2 px-3.5 text-sm sm:text-base sm:px-4 sm:py-2 md:px-3.5 md:py-2 lg:px-4 lg:py-2 rounded-full cursor-pointer"
                                     >
                                         Book Now
                                     </Link>

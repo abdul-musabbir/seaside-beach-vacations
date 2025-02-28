@@ -58,7 +58,7 @@ function SinglePage({
                                 Features & Amenities
                             </h2>
                             <Suspense fallback={<div>Loading features...</div>}>
-                                <PropertyFeatures />
+                                <PropertyFeatures slug={single_data.slug}/>
                             </Suspense>
                         </div>
 
